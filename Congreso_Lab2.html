@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form - Data Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* ---------- Full-width site header ---------- */
+        .site-header {
+            background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
+            box-shadow: 0 2px 12px rgba(21, 101, 192, 0.3);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .header-tag {
+            color: #e3f2fd;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ---------- Hero / page intro ---------- */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 40px 10px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: #1565c0;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .hero .subtitle {
+            color: #424242;
+            font-size: 15px;
+        }
+
+        /* ---------- Page wrapper ---------- */
+        .page {
+            padding-bottom: 60px;
+        }
+
+        .layout {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* ---------- Sidebar ---------- */
+        .sidebar {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(25, 103, 210, 0.15);
+            padding: 28px 24px;
+            position: sticky;
+            top: 30px;
+        }
+
+        .sidebar h3 {
+            color: #1565c0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            color: #555555;
+            font-size: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eef3fb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar .step-num {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #e3f2fd;
+            color: #1976d2;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ---------- Main form container ---------- */
+        .container {
+            background: #ffffff;
+            padding: 45px 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(25, 103, 210, 0.2);
+            width: 100%;
+            border-left: 5px solid #1976d2;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            color: #1976d2;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Two-column row for compact fields on wider screens */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            color: #333333;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #bbdefb;
+            border-radius: 6px;
+            background: #f8f9fa;
+            color: #333333;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #1976d2;
+            background: #ffffff;
+            box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+        }
+
+        input[type="text"]:invalid:not(:placeholder-shown),
+        input[type="email"]:invalid:not(:placeholder-shown),
+        input[type="number"]:invalid:not(:placeholder-shown) {
+            border-color: #d32f2f;
+            background-color: #ffebee;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="email"]::placeholder,
+        textarea::placeholder {
+            color: #999999;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 12px;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .radio-option:hover,
+        .checkbox-option:hover {
+            background: #e3f2fd;
+            border-color: #bbdefb;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #1976d2;
+        }
+
+        .radio-label,
+        .checkbox-label {
+            color: #333333;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .validation-feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .validation-feedback.success {
+            background: #c8e6c9;
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+            display: block;
+        }
+
+        .validation-feedback.error {
+            background: #ffcdd2;
+            color: #c62828;
+            border: 2px solid #f44336;
+            display: block;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 35px;
+            font-size: 15px;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex: 1;
+            max-width: 250px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.4);
+            border: 2px solid #1565c0;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #1e88e5 0%, #1976d2 100%);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            background: #90caf9;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-reset {
+            background: #ffffff;
+            color: #1976d2;
+            border: 2px solid #1976d2;
+        }
+
+        .btn-reset:hover {
+            background: #e3f2fd;
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-reset:active {
+            transform: translateY(0);
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffffff;
+            border-top: 3px solid #1565c0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .site-footer {
+            text-align: center;
+            color: #5c6b7a;
+            font-size: 12px;
+            padding: 25px 40px 40px;
+        }
+
+        /* ---------- Responsive breakpoints ---------- */
+        @media (max-width: 900px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-inner,
+            .hero,
+            .layout {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
+            }
+
+            .container {
+                padding: 25px;
+            }
+
+            .form-row,
+            .radio-group,
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">📋 SurveyHub</div>
+            <div class="header-tag">Your feedback shapes our service</div>
+        </div>
+    </header>
+
+    <div class="page">
+        <section class="hero">
+            <h1>Survey Form</h1>
+            <p class="subtitle">Please fill out all required fields marked with <span class="required">*</span></p>
+        </section>
+
+        <div class="layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h3>What to expect</h3>
+                <ul>
+                    <li><span class="step-num">1</span> Personal information</li>
+                    <li><span class="step-num">2</span> How you heard about us</li>
+                    <li><span class="step-num">3</span> Services you're interested in</li>
+                    <li><span class="step-num">4</span> Satisfaction rating</li>
+                    <li><span class="step-num">5</span> Open feedback</li>
+                </ul>
+            </aside>
+
+            <!-- Main form -->
+            <main class="container">
+                <form id="surveyForm">
+                    <!-- Section 1: Basic Personal Information -->
+                    <div class="form-section">
+                        <div class="section-title">Personal Information</div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Full Name <span class="required">*</span></label>
+                                <input 
+                                    type="text" 
+                                    id="fullName" 
+                                    name="name" 
+                                    placeholder="Enter your full name"
+                                    required
+                                >
+                                <div class="error-message" id="fullNameError">Full name is required and must be at least 3 characters</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ageGroup">Age Group <span class="required">*</span></label>
+                                <select id="ageGroup" name="ageGroup" required>
+                                    <option value="">-- Select your age group --</option>
+                                    <option value="18-25">18-25 years old</option>
+                                    <option value="26-35">26-35 years old</option>
+                                    <option value="36-45">36-45 years old</option>
+                                    <option value="46-55">46-55 years old</option>
+                                    <option value="56+">56+ years old</option>
+                                </select>
+                                <div class="error-message" id="ageGroupError">Please select an age group</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Gender <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input 
+                                        type="radio" 
+                                        id="genderMale" 
+                                        name="gender" 
+                                        value="Male"
+                                        required
+                                    >
+                                    <label for="genderMale" class="radio-label">Male</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input 
+                                        type="radio" 
+                                        id="genderFemale" 
+                                        name="gender" 
+                                        value="Female"
+                                        required
+                                    >
+                                    <label for="genderFemale" class="radio-label">Female</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input 
+                                        type="radio" 
+                                        id="genderOther" 
+                                        name="gender" 
+                                        value="Other"
+                                        required
+                                    >
+                                    <label for="genderOther" class="radio-label">Other</label>
+                                </div>
+                            </div>
+                            <div class="error-message" id="genderError">Please select a gender</div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Multiple-Choice Questions (Radio Buttons) -->
+                    <div class="form-section">
+                        <div class="section-title">How did you hear about us?</div>
+
+                        <div class="form-group">
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input 
+                                        type="radio" 
+                                        id="source1" 
+                                        name="source" 
+                                        value="Social Media"
+                                    >
+                                    <label for="source1" class="radio-label">Social Media</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input 
+                                        type="radio" 
+                                        id="source2" 
+                                        name="source" 
+                                        value="Friend Recommendation"
+                                    >
+                                    <label for="source2" class="radio-label">Friend Recommendation</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input 
+                                        type="radio" 
+                                        id="source3" 
+                                        name="source" 
+                                        value="Search Engine"
+                                    >
+                                    <label for="source3" class="radio-label">Search Engine</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input 
+                                        type="radio" 
+                                        id="source4" 
+                                        name="source" 
+                                        value="Advertisement"
+                                    >
+                                    <label for="source4" class="radio-label">Advertisement</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Checkbox Selections -->
+                    <div class="form-section">
+                        <div class="section-title">Services Interested In</div>
+                        <p style="color: #666; font-size: 13px; margin-bottom: 12px;">(Select all that apply)</p>
+
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <div class="checkbox-option">
+                                    <input 
+                                        type="checkbox" 
+                                        id="service1" 
+                                        name="services" 
+                                        value="Consulting"
+                                    >
+                                    <label for="service1" class="checkbox-label">Consulting Services</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input 
+                                        type="checkbox" 
+                                        id="service2" 
+                                        name="services" 
+                                        value="Development"
+                                    >
+                                    <label for="service2" class="checkbox-label">Web Development</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input 
+                                        type="checkbox" 
+                                        id="service3" 
+                                        name="services" 
+                                        value="Design"
+                                    >
+                                    <label for="service3" class="checkbox-label">UI/UX Design</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input 
+                                        type="checkbox" 
+                                        id="service4" 
+                                        name="services" 
+                                        value="Support"
+                                    >
+                                    <label for="service4" class="checkbox-label">Customer Support</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input 
+                                        type="checkbox" 
+                                        id="service5" 
+                                        name="services" 
+                                        value="Training"
+                                    >
+                                    <label for="service5" class="checkbox-label">Training Programs</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Dropdown Menu -->
+                    <div class="form-section">
+                        <div class="section-title">Satisfaction Level</div>
+
+                        <div class="form-group">
+                            <label for="satisfaction">Rate your overall experience <span class="required">*</span></label>
+                            <select id="satisfaction" name="satisfaction" required>
+                                <option value="">-- Please select a rating --</option>
+                                <option value="Very Satisfied">Very Satisfied</option>
+                                <option value="Satisfied">Satisfied</option>
+                                <option value="Neutral">Neutral</option>
+                                <option value="Dissatisfied">Dissatisfied</option>
+                                <option value="Very Dissatisfied">Very Dissatisfied</option>
+                            </select>
+                            <div class="error-message" id="satisfactionError">Please select a satisfaction level</div>
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Additional Feedback -->
+                    <div class="form-section">
+                        <div class="section-title">Your Feedback</div>
+
+                        <div class="form-group">
+                            <label for="comments">Comments & Suggestions</label>
+                            <textarea 
+                                id="comments" 
+                                name="comments" 
+                                placeholder="Please share any comments, suggestions, or feedback you have..."
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Validation Feedback -->
+                    <div class="validation-feedback" id="validationFeedback"></div>
+
+                    <!-- Section 6: Form Buttons -->
+                    <div class="button-group">
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <span id="submitText">Submit</span>
+                        </button>
+                        <button type="reset" class="btn-reset" id="resetBtn">Reset</button>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        &copy; 2026 SurveyHub. All responses are kept confidential.
+    </footer>
+
+    <script>
+        const form = document.getElementById('surveyForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const validationFeedback = document.getElementById('validationFeedback');
+
+        // Form validation function
+        function validateForm() {
+            let isValid = true;
+            const feedback = validationFeedback;
+
+            // Clear previous messages
+            feedback.textContent = '';
+            feedback.className = 'validation-feedback';
+
+            // Validate Full Name
+            const fullName = document.getElementById('fullName').value.trim();
+            const fullNameError = document.getElementById('fullNameError');
+            if (fullName.length < 3) {
+                fullNameError.classList.add('show');
+                isValid = false;
+            } else {
+                fullNameError.classList.remove('show');
+            }
+
+            // Validate Age Group
+            const ageGroup = document.getElementById('ageGroup').value;
+            const ageGroupError = document.getElementById('ageGroupError');
+            if (ageGroup === '') {
+                ageGroupError.classList.add('show');
+                isValid = false;
+            } else {
+                ageGroupError.classList.remove('show');
+            }
+
+            // Validate Gender
+            const gender = document.querySelector('input[name="gender"]:checked');
+            const genderError = document.getElementById('genderError');
+            if (!gender) {
+                genderError.classList.add('show');
+                isValid = false;
+            } else {
+                genderError.classList.remove('show');
+            }
+
+            // Validate Satisfaction
+            const satisfaction = document.getElementById('satisfaction').value;
+            const satisfactionError = document.getElementById('satisfactionError');
+            if (satisfaction === '') {
+                satisfactionError.classList.add('show');
+                isValid = false;
+            } else {
+                satisfactionError.classList.remove('show');
+            }
+
+            return isValid;
+        }
+
+        // Real-time validation
+        document.getElementById('fullName').addEventListener('blur', function() {
+            if (this.value.trim().length < 3 && this.value.trim().length > 0) {
+                document.getElementById('fullNameError').classList.add('show');
+            } else {
+                document.getElementById('fullNameError').classList.remove('show');
+            }
+        });
+
+        document.getElementById('ageGroup').addEventListener('change', function() {
+            if (this.value !== '') {
+                document.getElementById('ageGroupError').classList.remove('show');
+            }
+        });
+
+        document.querySelectorAll('input[name="gender"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('genderError').classList.remove('show');
+            });
+        });
+
+        document.getElementById('satisfaction').addEventListener('change', function() {
+            if (this.value !== '') {
+                document.getElementById('satisfactionError').classList.remove('show');
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Validate form
+            if (!validateForm()) {
+                validationFeedback.textContent = '⚠️ Please fill out all required fields correctly.';
+                validationFeedback.className = 'validation-feedback error';
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            document.getElementById('submitText').textContent = 'Submitting...';
+
+            try {
+                // Collect form data
+                const formData = new FormData(form);
+
+                // Collect selected services
+                const services = [];
+                document.querySelectorAll('input[name="services"]:checked').forEach(checkbox => {
+                    services.push(checkbox.value);
+                });
+
+                const data = {
+                    name: formData.get('name'),
+                    gender: formData.get('gender'),
+                    ageGroup: formData.get('ageGroup'),
+                    comments: formData.get('comments'),
+                    source: formData.get('source') || 'Not selected',
+                    services: services.join(', ') || 'None selected',
+                    satisfaction: formData.get('satisfaction')
+                };
+
+                // Google Apps Script Web App URL
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbwfDw5ub6RpFQatMuBt41iwDbjzE5uKPYxVbEZAYy_PLn6LJ3A8f51be-BA18kqhHhd2Q/exec';
+
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: new URLSearchParams(data)
+                });
+
+                if (response.ok) {
+                    validationFeedback.textContent = '✅ Form submitted successfully! Your response has been recorded.';
+                    validationFeedback.className = 'validation-feedback success';
+                    form.reset();
+
+                    // Scroll to feedback
+                    validationFeedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                validationFeedback.textContent = '❌ Error submitting form. Please try again.';
+                validationFeedback.className = 'validation-feedback error';
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                document.getElementById('submitText').textContent = 'Submit';
+            }
+        });
+
+        // Reset button handler
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            form.reset();
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.classList.remove('show');
+            });
+            validationFeedback.textContent = '';
+            validationFeedback.className = 'validation-feedback';
+        });
+    </script>
+</body>
+</html>
